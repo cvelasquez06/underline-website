@@ -3,11 +3,13 @@ $document.ready(function () {
 		e.preventDefault();
 		fields = $('#contact-form').serialize();
 		$.post('messages', fields
-		).done(function(response){
-			$('#mail-status').html("<div class='alert alert-dismissible alert-"+ response.status +"' role='alert'><button class='close' type='button' data-dismiss='alert' aria-label='Close'><span class='mdi mdi-close' aria-hidden='true'></span></button><p class='offset-top-0'>"+response.msg + "</p></div>");
+		).done(function(payload){
+			console.log(payload.status);
+			$('#mail-status').html("<div class='alert alert-dismissible alert-"+ payload.status +"' role='alert'><button class='close' type='button' data-dismiss='alert' aria-label='Close'><span class='mdi mdi-close' aria-hidden='true'></span></button><p class='offset-top-0'>"+payload.msg + "</p></div>");
 			$('#contact-form')[0].reset();
-		}).fail(function(response){
-			$('#mail-status').html("<div class='alert alert-dismissible alert-danger' role='alert'><button class='close' type='button' data-dismiss='alert' aria-label='Close'><span class='mdi mdi-close' aria-hidden='true'></span></button><p class='offset-top-0'>"+response.msg+"</p></div>");
+		}).fail(function(payload){
+			console.log(payload);
+			$('#mail-status').html("<div class='alert alert-dismissible alert-"+ payload['responseJSON'].status +"' role='alert'><button class='close' type='button' data-dismiss='alert' aria-label='Close'><span class='mdi mdi-close' aria-hidden='true'></span></button><p class='offset-top-0'>"+payload['responseJSON'].msg+"</p></div>");
 		});
 	})
 });
